@@ -60,3 +60,4 @@ Temporary Items
 # Internals
 **/cmake-build-debug
 **/lib
+**/.idea
