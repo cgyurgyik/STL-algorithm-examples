@@ -17,7 +17,8 @@ TODO
 ```
 Even better though, is using ```std::any_of```. 
 ```
-const bool equals_four = std::any_of(numbers.cbegin(), numbers.cend(), 
+// Determines whether 'v' contains 4.
+const bool equals_four = std::any_of(v.cbegin(), v.cend(), 
                          [](int i)->int{ return i == 4; });
 ```
 
