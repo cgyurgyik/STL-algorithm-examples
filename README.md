@@ -1,5 +1,5 @@
 # About
-As I listened to quite a few talks about the importance of using C++ STL algorithms, I realized I needed to practice using them myself. This repository will provide simple examples for each algorithm. The target audience is C++ beginners, in hopes to show them the simplicity and power of these algorithms. 
+As I listened to quite a few talks about the importance of using C++ STL algorithms, I realized I needed to practice using them myself. This repository will provide simple examples for each algorithm. The target audience is C++ beginners, in hopes to show them the simplicity and power of these algorithms. Use this not as a replacement, but as another source of examples that can be quickly read and understood.
 
 ## Example
 Given a std::vector ```v``` of integers:
@@ -25,12 +25,20 @@ for (const int i : v) {
   }
 }
 ```
+
 Even better though, is using ```std::any_of```. 
+
 ```
 // Determines whether 'v' contains 4.
 const bool equals_four = std::any_of(v.cbegin(), v.cend(), [](int i)->int{ return i == 4; });
 ```
+
 Here, we've taken a raw ```for loop``` and replaced it with an STL algorithm that, in one line, tells us more clearly what is occurring. This improves readability, minimizes number of lines of code, and provides (likely) the best algorithm for what you're trying to do.
+
+With the release of C++20, this will simplify even further using ranges:
+```
+const bool equals_four = std::ranges::any_of(v, [](int i)->int{ return i == 4; }); 
+```
 
 ## Related STL Talks
 - [CppCon 2018: Jonathan Boccara "105 STL Algorithms in Less Than an Hour"](https://www.youtube.com/watch?v=2olsGf6JIkU&t=2459s)
@@ -40,3 +48,4 @@ Here, we've taken a raw ```for loop``` and replaced it with an STL algorithm tha
 
 ## References
 - [cppreference.com](https://en.cppreference.com/w/cpp/algorithm)
+- [Google Test Suite](https://github.com/google/googletest)
