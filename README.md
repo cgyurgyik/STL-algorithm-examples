@@ -14,7 +14,7 @@ for (int i = 0; i < v.size(); ++i) {
   }
 }
 ```
-Could be improved upon by using a range-based loop:
+This could be improved upon by using a range-based loop:
 ```
 // Determines whether 'v' contains 4.
 bool contains_four = false;
@@ -26,7 +26,7 @@ for (const int i : v) {
 }
 ```
 
-Even better though, is using ```std::any_of```. 
+Even better though, is using ```std::any_of```: 
 
 ```
 // Determines whether 'v' contains 4.
