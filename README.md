@@ -30,14 +30,14 @@ Even better though, is using ```std::any_of```.
 
 ```
 // Determines whether 'v' contains 4.
-const bool equals_four = std::any_of(v.cbegin(), v.cend(), [](int i)->int{ return i == 4; });
+const bool equals_four = std::any_of(v.cbegin(), v.cend(), [](int i)->bool{ return i == 4; });
 ```
 
 Here, we've taken a raw ```for loop``` and replaced it with an STL algorithm that, in one line, tells us more clearly what is occurring. This improves readability, minimizes number of lines of code, and provides (likely) the best algorithm for what you're trying to do.
 
 With the release of C++20, this will simplify even further using ranges:
 ```
-const bool equals_four = std::ranges::any_of(v, [](int i)->int{ return i == 4; }); 
+const bool equals_four = std::ranges::any_of(v, [](int i)->bool{ return i == 4; }); 
 ```
 
 ## Related STL Talks
