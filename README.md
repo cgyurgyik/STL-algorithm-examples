@@ -1,5 +1,5 @@
 # About
-As I listened to quite a few talks about the importance of using C++ STL algorithms, I realized I needed to practice using them myself. This repository will provide simple examples for each algorithm. The target audience is C++ beginners, in hopes to show them the simplicity and power of these algorithms. For example, given a vector ```v``` of integers:
+As I listened to quite a few talks about the importance of using C++ STL algorithms, I realized I needed to practice using them myself. This repository will provide simple examples for each algorithm. The target audience is C++ beginners, in hopes to show them the simplicity and power of these algorithms. For example, given a std::vector ```v``` of integers:
 
 ```
 // Determines whether 'v' contains 4.
@@ -13,7 +13,14 @@ for (int i = 0; i < v.size(); ++i) {
 ```
 Could be improved upon by using a range-based loop:
 ```
-TODO
+// Determines whether 'v' contains 4.
+bool contains_four = false;
+for (const int i : v) {
+  if (i == 4) {
+    contains_four = true;
+    break;
+  }
+}
 ```
 Even better though, is using ```std::any_of```. 
 ```
