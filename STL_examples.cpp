@@ -154,9 +154,12 @@ TEST(find_end, ExampleOne) {
     EXPECT_EQ(last_sequence_iterator - v.cbegin(), 8); // Iterator begins at last sub-sequence.
 }
 
+// Note that find_first_of() is looking for ANY of the elements
+// in the search range. This is different from search(), which is looking
+// for the entire sequence.
 TEST(find_first_of, ExampleOne) {
     const std::vector<char> v{'1', '2', 'w', 'o', 'r', 'd', '3', '3'};
-    const std::vector<char> sequence = {'w', 'o', 'r', 'd'};
+    const std::vector<char> sequence = {'w', 'r', 'd'};
     const auto iterator = std::find_first_of(v.cbegin(), v.cend(), sequence.cbegin(), sequence.cend());
     EXPECT_EQ(*iterator, 'w');
     EXPECT_EQ(iterator - v.cbegin(), 2);
@@ -164,7 +167,7 @@ TEST(find_first_of, ExampleOne) {
 
 TEST(find_first_of, ExampleTwoWithPredicate) {
     const std::vector<char> v{'w', 'o', 'r', 'd', '1', 'W', 'O', 'R', 'D', '3', '3'};
-    const std::vector<char> sequence = {'w', 'o', 'r', 'd'};
+    const std::vector<char> sequence = {'w', 'r', 'd'};
     const auto isCapitalized = [](char c1, char c2)->bool {
         return std::tolower(c1) == std::tolower(c2) && c1 >= 'A' && c1 <= 'Z';
     };
@@ -192,11 +195,44 @@ TEST(adjacent_find, ExampleTwoWithPredicate) {
     EXPECT_EQ(iterator - v.cbegin(), 3);
 }
 
-TEST(search, ExampleOne) {}
+// Note that there exists a search_n() as well,
+// that takes in the number of elements to search.
+TEST(search, ExampleOne) {
+    // This is going to find the first sub-sequence inside a container,
+    // and return an iterator to it.
+    const std::vector<int> v{1,2,3,4,1,2,3,4,1,2,3,4};
+    const std::vector<int> sequence{1,2,3,4};
+    const auto sequence_iterator = std::search(v.cbegin(), v.cend(), sequence.cbegin(), sequence.cend());
+    EXPECT_EQ(*sequence_iterator, 1);
+    EXPECT_EQ(sequence_iterator - v.cbegin(), 0); // Iterator begins at last sub-sequence.
+}
 
-TEST(search_n, ExampleOne) {}
+TEST(search, ExampleTwoWithPredicate) {
+    const std::vector<char> v{'w', 'o', 'r', 'd', '1', 'W', 'O', 'R', 'D', '3', '3'};
+    const std::vector<char> sequence = {'w', 'o', 'r', 'd'};
+    const auto isCapitalized = [](char c1, char c2)->bool {
+        return std::tolower(c1) == std::tolower(c2) && c1 >= 'A' && c1 <= 'Z';
+    };
+    const auto iterator = std::search(v.cbegin(), v.cend(), sequence.cbegin(), sequence.cend(), isCapitalized);
+    EXPECT_EQ(*iterator, 'W');
+    EXPECT_EQ(iterator - v.cbegin(), 5);
+}
 
 // Modifying sequence operations.
+
+// Note that copy_n() also exists that takes in another
+// parameter to copy only the first n elements.
+TEST(copy, ExampleOne) {
+
+}
+
+TEST(copy_if, ExampleOne) {
+
+}
+
+TEST(copy_backward, ExampleOne) {
+    
+}
 
 // Partitioning operations.
 
