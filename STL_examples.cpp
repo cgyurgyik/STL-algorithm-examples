@@ -223,15 +223,33 @@ TEST(search, ExampleTwoWithPredicate) {
 // Note that copy_n() also exists that takes in another
 // parameter to copy only the first n elements.
 TEST(copy, ExampleOne) {
-
+    const std::vector<int> from{1,2,3,4,5};
+    std::vector<int> to;
+    to.reserve(from.size());
+    std::copy(from.cbegin(), from.cend(), std::back_inserter(to));
+    EXPECT_EQ(from, to);
 }
 
 TEST(copy_if, ExampleOne) {
-
+    std::vector<int> from{1,2,3,-4,-5};
+    std::vector<int> to;
+    to.reserve(from.size());
+    const auto ElementIsPositive = [](int i)->bool {
+        return i > 0;
+    };
+    std::copy_if(from.cbegin(), from.cend(), std::back_inserter(to), ElementIsPositive);
+    from.pop_back(); // Remove -5: { 1, 2, 3, -4 }
+    from.pop_back(); // Remove -4: { 1, 2, 3 }
+    EXPECT_EQ(from, to);
 }
 
 TEST(copy_backward, ExampleOne) {
-    
+    const std::vector<int> from{1,2,3,4,5};
+    std::vector<int> to(10);
+    // This simply copies the elements backwards, but preserves order.
+    std::copy_backward(from.cbegin(), from.cend(), to.end());
+    const std::vector<int> new_to{0, 0, 0, 0, 0, 1, 2, 3, 4, 5};
+    EXPECT_EQ(to, new_to);
 }
 
 // Partitioning operations.
