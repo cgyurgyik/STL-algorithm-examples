@@ -165,6 +165,18 @@ TEST(find_first_of, ExampleOne) {
     EXPECT_EQ(iterator - v.cbegin(), 2);
 }
 
+// Note that there exists a search_n() as well,
+// that takes in the number of elements to search.
+TEST(search, ExampleOne) {
+    // This is going to find the first sub-sequence inside a container,
+    // and return an iterator to it.
+    const std::vector<int> v{1,2,3,4,1,2,3,4,1,2,3,4};
+    const std::vector<int> sequence{1,2,3,4};
+    const auto sequence_iterator = std::search(v.cbegin(), v.cend(), sequence.cbegin(), sequence.cend());
+    EXPECT_EQ(*sequence_iterator, 1);
+    EXPECT_EQ(sequence_iterator - v.cbegin(), 0); // Iterator begins at last sub-sequence.
+}
+
 TEST(find_first_of, ExampleTwoWithPredicate) {
     const std::vector<char> v{'w', 'o', 'r', 'd', '1', 'W', 'O', 'R', 'D', '3', '3'};
     const std::vector<char> sequence = {'w', 'r', 'd'};
@@ -193,18 +205,6 @@ TEST(adjacent_find, ExampleTwoWithPredicate) {
     EXPECT_EQ(*iterator, 5);
     EXPECT_EQ(*(iterator + 1), 92);
     EXPECT_EQ(iterator - v.cbegin(), 3);
-}
-
-// Note that there exists a search_n() as well,
-// that takes in the number of elements to search.
-TEST(search, ExampleOne) {
-    // This is going to find the first sub-sequence inside a container,
-    // and return an iterator to it.
-    const std::vector<int> v{1,2,3,4,1,2,3,4,1,2,3,4};
-    const std::vector<int> sequence{1,2,3,4};
-    const auto sequence_iterator = std::search(v.cbegin(), v.cend(), sequence.cbegin(), sequence.cend());
-    EXPECT_EQ(*sequence_iterator, 1);
-    EXPECT_EQ(sequence_iterator - v.cbegin(), 0); // Iterator begins at last sub-sequence.
 }
 
 TEST(search, ExampleTwoWithPredicate) {
@@ -250,6 +250,146 @@ TEST(copy_backward, ExampleOne) {
     std::copy_backward(from.cbegin(), from.cend(), to.end());
     const std::vector<int> new_to{0, 0, 0, 0, 0, 1, 2, 3, 4, 5};
     EXPECT_EQ(to, new_to);
+}
+
+TEST(move, ExampleOne) {
+    std::string s = "Hello, World!";
+    std::vector<std::string> v;
+    // Contents of 's' are moved rather than copied.
+    v.push_back(std::move(s));
+    // As a result, 's' is now empty.
+    EXPECT_EQ(s, "");
+    EXPECT_EQ(v.size(), 1);
+    EXPECT_EQ(v[0], "Hello, World!");
+}
+
+TEST(move_backward, ExampleOne) {
+    // For overlapping ranges, you want to use this when moving
+    // right to left (beginning of destination is outside source).
+    std::vector<std::string> source{"a", "b", "c"};
+    std::vector<std::string> destination(source.size());
+    std::move_backward(source.begin(), source.end(), destination.end());
+
+    std::vector<std::string> new_source{"", "", ""};
+    std::vector<std::string> new_destination{"a", "b", "c"};
+    EXPECT_EQ(source, new_source);
+    EXPECT_EQ(destination, new_destination);
+}
+
+// Note that fill_n also exists.
+TEST(fill, ExampleOne) {
+    std::vector<char> v{'a', 'b', 'c', 'd'};
+    std::fill(v.begin(), v.end(), 'z');
+
+    std::vector<char> new_v{'z', 'z', 'z', 'z'};
+    EXPECT_EQ(v, new_v);
+}
+
+// Note that generate_n also exists.
+TEST(generate, ExampleOne) {
+    const auto randomNumber = []()->double{
+        return std::rand();
+    };
+    std::vector<double> v(5);
+    std::generate(v.begin(), v.end(), randomNumber);
+}
+
+// Note that remove_copy() also exists, which copies the range,
+// omitting anything that doesn't fit the criteria.
+TEST(remove, ExampleOne) {
+    std::string s = "H_e_l_l_o";
+    std::remove(s.begin(), s.end(), '_');
+    // Note that remove() will shift all non space characters to the left, but we
+    // still have the _l_o leftover. To remove those, we can use erase() as well.
+    EXPECT_EQ(s, "Hello_l_o");
+
+    // Using erase-remove idiom:
+    std::string s2 = "H_e_l_l_o";
+    s2.erase(std::remove(s2.begin(), s2.end(), '_'), s2.end());
+    EXPECT_EQ(s2, "Hello");
+
+}
+
+// Note that remove_if_copy() also exists, which copies the range,
+// omitting anything that doesn't fit the criteria.
+TEST(remove_if, ExampleOne) {
+    std::string s = "*h_e_*l_l*_o";
+    const auto isNotLowercaseLetter = [](unsigned char c)->bool{ return !(c >= 'a' && c <= 'z'); };
+    std::remove_if(s.begin(), s.end(), isNotLowercaseLetter);
+    EXPECT_EQ(s, "hello*l_l*_o");
+
+    // Using erase-remove idiom:
+    std::string s2 = "*h_e_*l_l*_o";
+    s2.erase(std::remove_if(s2.begin(), s2.end(), isNotLowercaseLetter), s2.end());
+    EXPECT_EQ(s2, "hello");
+}
+
+TEST(transform, ExampleOne) {
+    std::string s("R1EM3OV3E N3UMBE3RS");
+    const auto turnNumberIntoUnderline = [](unsigned char c)->unsigned char {
+        if (c < '9' && c > '0') return '_';
+        return c;
+    };
+    std::transform(s.begin(), s.end(), s.begin(),
+                   turnNumberIntoUnderline);
+    EXPECT_EQ(s, "R_EM_OV_E N_UMBE_RS");
+
+    // We can even take this a step further and remove the underlines.
+    s.erase(std::remove(s.begin(), s.end(), '_'), s.end());
+    EXPECT_EQ(s, "REMOVE NUMBERS");
+}
+
+// Note: replace_copy() also exists.
+TEST(replace, ExampleOne) {
+    std::vector<int> v{1,2,3,3,3,4,4,5,5};
+    std::replace(v.begin(), v.end(), 3, 42);
+    std::vector new_v{1,2,42,42,42,4,4,5,5};
+    EXPECT_EQ(v, new_v);
+}
+
+// Note: replace_if_copy() also exists.
+TEST(replace_if, ExampleOne) {
+    std::vector<int> v{-1,-2,-3,4,5};
+    const auto isLessThanZero = [](int i)->bool{ return i < 0; };
+
+    std::replace_if(v.begin(), v.end(), isLessThanZero, 42);
+    std::vector new_v{42,42,42,4,5};
+    EXPECT_EQ(v, new_v);
+}
+
+TEST(swap, ExampleOne) {
+    int a = 10;
+    int b = 42;
+    std::swap(a, b);
+    EXPECT_EQ(a, 42);
+    EXPECT_EQ(b, 10);
+}
+
+TEST(swap_ranges, ExampleOne) {
+    std::vector<int> ones{1, 1, 1, 1, 1};
+    std::vector<int> twos{2, 2, 2, 2, 2};
+    std::swap_ranges(ones.begin(), ones.end(), twos.begin());
+
+    const std::vector new_ones{2, 2, 2, 2, 2};
+    const std::vector new_twos{1, 1, 1, 1, 1};
+    EXPECT_EQ(ones, new_ones);
+    EXPECT_EQ(twos, new_twos);
+}
+
+TEST(iter_swap, ExampleOne) {
+
+}
+
+// Note that reverse_copy() also exists, which
+// makes a copy of the reversed range.
+TEST(reverse, ExampleOne) {
+
+}
+
+// Note that rotate_copy also exists, which
+// makes a copy first and then rotates.
+TEST(rotate, ExampleOne) {
+
 }
 
 // Partitioning operations.
