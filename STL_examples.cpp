@@ -482,23 +482,75 @@ TEST(unique, ExampleTwoUnsorted) {
 
 // Partitioning operations.
 TEST(is_partitioned, ExampleOne) {
-
+    const auto isLessThanZero = [](int i)->bool{ return i < 0; };
+    std::vector<int> v{-1,-2,-3,1,2,3};
+    const bool is_partitioned = std::is_partitioned(v.cbegin(), v.cend(), isLessThanZero);
+    EXPECT_TRUE(is_partitioned);
 }
 
 // Note: partition_copy() exists as well.
 TEST(partition, ExampleOne) {
+    const auto isLessThanZero = [](int i)->bool{ return i < 0; };
+    std::vector<int> v{-1,1,-2,2,-3,3};
 
+    // While we're guaranteed that the negative elements are on the left,
+    // there is no guarantee about the order of these elements.
+    // To guarantee order, use stable_partition().
+    std::partition(v.begin(), v.end(), isLessThanZero);
+
+    const bool is_partitioned = std::is_partitioned(v.cbegin(), v.cend(), isLessThanZero);
+    EXPECT_TRUE(is_partitioned);
 }
 
 TEST(stable_partition, ExampleOne) {
+    const auto isLessThanZero = [](int i)->bool{ return i < 0; };
+    std::vector<int> v{-1,1,-2,2,-3,3};
+    std::stable_partition(v.begin(), v.end(), isLessThanZero);
+
+    const bool is_partitioned = std::is_partitioned(v.cbegin(), v.cend(), isLessThanZero);
+    EXPECT_TRUE(is_partitioned);
+
+    // With stable_partition(), we are guaranteed relative order.
+    const std::vector<int> new_v{-1, -2, -3, 1, 2, 3};
+    EXPECT_EQ(v, new_v);
 
 }
 
 TEST(partition_point, ExampleOne) {
+    const auto isLessThanZero = [](int i)->bool{ return i < 0; };
+    std::vector<int> v{-1,1,-2,2,-3,3, -4};
+    std::stable_partition(v.begin(), v.end(), isLessThanZero);
 
+    auto p_point = std::partition_point(v.begin(), v.end(), isLessThanZero);
+
+    const bool is_partitioned = std::is_partitioned(v.cbegin(), v.cend(), isLessThanZero);
+    EXPECT_TRUE(is_partitioned);
+
+    EXPECT_EQ(*p_point, 1);
+    std::vector<int> positives;
+    std::vector<int> negatives;
+    std::copy(v.begin(), p_point, std::back_inserter(negatives));
+    std::copy(p_point, v.end(), std::back_inserter(positives));
+
+    const std::vector<int> expected_positives{1,2,3};
+    const std::vector<int> expected_negatives{-1,-2,-3,-4};
+    EXPECT_EQ(positives, expected_positives);
+    EXPECT_EQ(negatives, expected_negatives);
 }
 
 // Sorting operations.
+TEST(is_sorted, ExampleOne) {}
+
+TEST(is_sorted_until, ExampleOne) {}
+
+TEST(sort, ExampleOne) {}
+
+// Note: partial_sort_copy() exists as well.
+TEST(partial_sort, ExampleOne) {}
+
+TEST(stable_sort, ExampleOne) {}
+
+TEST(nth_element, ExampleOne) {}
 
 // Binary search operations (on sorted ranges).
 
