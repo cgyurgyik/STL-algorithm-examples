@@ -41,10 +41,12 @@ const bool contains_four = std::ranges::any_of(v, [](int i)->bool{ return i == 4
 ```
 
 ## Related STL Talks
-- [CppCon 2018: Jonathan Boccara "105 STL Algorithms in Less Than an Hour"](https://www.youtube.com/watch?v=2olsGf6JIkU&t=2459s)
+- [Meeting C++ 2019: Connor Hoekstra "Better Algorithm Intuition](https://www.youtube.com/watch?v=TSZzvo4htTQ)
 - [CppCon 2019: Connor Hoekstra "Algorithm Intuition" Part 1](https://www.youtube.com/watch?v=pUEnO6SvAMo)
 - [CppCon 2019: Connor Hoekstra "Algorithm Intuition" Part 2](https://www.youtube.com/watch?v=sEvYmb3eKsw)
-- [CppCon: Mathieu Ropert "This Videogame Programmer Used the STL and You Will Never Guess What Happened Next](https://www.youtube.com/watch?v=6hC9IxqdDDw)
+- [CppCon 2019: Mathieu Ropert "This Videogame Programmer Used the STL and You Will Never Guess What Happened Next"](https://www.youtube.com/watch?v=6hC9IxqdDDw)
+- [CppCon 2018: Jonathan Boccara "105 STL Algorithms in Less Than an Hour"](https://www.youtube.com/watch?v=2olsGf6JIkU&t=2459s)
+- [GoingNative C++ 2013: Sean Parent "C++ Seasoning"](https://www.youtube.com/watch?v=W2tWOdzgXHA)
 
 ## References
 - [cppreference.com](https://en.cppreference.com/w/cpp/algorithm)
