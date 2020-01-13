@@ -41,7 +41,7 @@ const bool contains_four = std::ranges::any_of(v, [](int i)->bool{ return i == 4
 ```
 
 ## Related STL Talks
-- [Meeting C++ 2019: Connor Hoekstra "Better Algorithm Intuition](https://www.youtube.com/watch?v=TSZzvo4htTQ)
+- [Meeting C++ 2019: Connor Hoekstra "Better Algorithm Intuition"](https://www.youtube.com/watch?v=TSZzvo4htTQ)
 - [CppCon 2019: Connor Hoekstra "Algorithm Intuition" Part 1](https://www.youtube.com/watch?v=pUEnO6SvAMo)
 - [CppCon 2019: Connor Hoekstra "Algorithm Intuition" Part 2](https://www.youtube.com/watch?v=sEvYmb3eKsw)
 - [CppCon 2019: Mathieu Ropert "This Videogame Programmer Used the STL and You Will Never Guess What Happened Next"](https://www.youtube.com/watch?v=6hC9IxqdDDw)
