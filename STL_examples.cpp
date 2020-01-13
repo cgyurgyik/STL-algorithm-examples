@@ -1,5 +1,6 @@
 #include "gtest/gtest.h"
 #include <algorithm>
+#include <random>
 #include <iterator>
 
 // Examples for each STL algorithm. Verified with Google test suite. While code duplication is rampant,
@@ -377,22 +378,125 @@ TEST(swap_ranges, ExampleOne) {
 }
 
 TEST(iter_swap, ExampleOne) {
+    std::vector v1{1, 2, 3, 4, 5};
+    std::vector v2{-1, -2, -3, -4, -5};
 
+    // swaps the first element in v1 and v2.
+    std::iter_swap(v1.begin(), v2.begin());
+    std::vector<int> new_v1{-1, 2, 3, 4, 5};
+    std::vector<int> new_v2{1, -2, -3, -4, -5};
+    EXPECT_EQ(v1, new_v1);
+    EXPECT_EQ(v2, new_v2);
+
+    // swaps the first element in v1 and 3rd element in v2.
+    std::iter_swap(v1.begin(), v2.begin() + 2);
+    new_v1 = {-3, 2, 3, 4, 5};
+    new_v2 = {1, -2, -1, -4, -5};
+    EXPECT_EQ(v1, new_v1);
+    EXPECT_EQ(v2, new_v2);
 }
+
 
 // Note that reverse_copy() also exists, which
 // makes a copy of the reversed range.
 TEST(reverse, ExampleOne) {
+    std::vector<int> v{1,2,3,4,5};
+    std::reverse(v.begin(), v.end());
 
+    const std::vector<int> reversed_v{5,4,3,2,1};
+    EXPECT_EQ(v, reversed_v);
 }
 
 // Note that rotate_copy also exists, which
 // makes a copy first and then rotates.
 TEST(rotate, ExampleOne) {
+    std::vector<int> v{1,2,3,4,5};
 
+    // Element in the middle, v.begin() + 1
+    // becomes first element.
+    std::rotate(v.begin(), v.begin() + 1, v.end());
+
+    const std::vector<int> rotated_v{2,3,4,5,1};
+    EXPECT_EQ(v, rotated_v);
+}
+
+// C++20
+// TEST(shift_left, ExampleOne) {}
+// TEST(shift_right, ExampleOne) {}
+
+TEST(shuffle, ExampleOne) {
+    std::vector<int> v{1,2,3,4,5};
+    std::random_device random_device;
+    std::mt19937 gen(random_device());
+
+    std::shuffle(v.begin(), v.end(), gen);
+    // Since shuffle is randomly generated, one can just print the elements
+    // instead to verify. One should expect a vector of the same size
+    // with the elements randomly shuffled.
+
+    // const auto printElement = [](int i)->int{ printf("\n%d\n", i); return i; };
+    // std::transform(v.begin(), v.end(), v.begin(), printElement);
+}
+
+TEST(sample, ExampleOne) {
+    std::string s = "0123456789";
+    std::string destination;
+    std::random_device random_device;
+    std::mt19937 gen(random_device());
+
+    std::sample(s.begin(), s.end(), std::back_inserter(destination), 5, gen);
+    // Since sample is randomly generated, one can just print the elements
+    // instead to verify. One should expect 5 random characters from 's' to
+    // be placed in destination.
+
+    // const auto printElement = [](unsigned char c)->unsigned char{ printf("\n%c\n", c); return c; };
+    // std::transform(destination.begin(), destination.end(), destination.begin(), printElement);
+}
+
+// Note: unique_copy also exists.
+TEST(unique, ExampleOneSorted) {
+    std::vector<int> v{1,1,1,2,2,2,3,3,3,4,4,5,5,5};
+    const auto iterator = std::unique(v.begin(), v.end());
+    v.erase(iterator, v.end());
+
+    // std::unique will shift extra equivalent elements
+    // in groups. Since 'v' is sorted, this will produce
+    // the vector below.
+    // We then use erase() to remove them.
+    const std::vector<int> new_v{1,2,3,4,5};
+    EXPECT_EQ(v, new_v);
+}
+
+TEST(unique, ExampleTwoUnsorted) {
+    //
+    std::vector<int> v{1,1,2,1,3,3,4,4,5};
+    const auto iterator = std::unique(v.begin(), v.end());
+    v.erase(iterator, v.end());
+
+    // Since 1 is unique element in the group [2,1,3]
+    // it remains in the vector.
+    // We then use erase() to remove them.
+    const std::vector<int> new_v{1,2,1,3,4,5};
+    EXPECT_EQ(v, new_v);
 }
 
 // Partitioning operations.
+TEST(is_partitioned, ExampleOne) {
+
+}
+
+// Note: partition_copy() exists as well.
+TEST(partition, ExampleOne) {
+
+}
+
+TEST(stable_partition, ExampleOne) {
+
+}
+
+TEST(partition_point, ExampleOne) {
+
+}
 
 // Sorting operations.
 
