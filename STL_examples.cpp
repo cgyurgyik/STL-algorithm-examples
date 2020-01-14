@@ -566,12 +566,13 @@ TEST(sort, ExampleTwoWithPredicate) {
 TEST(is_sorted_until, ExampleOne) {
     std::vector<int> v{1, 2, 3, 4, 3, 5, 6};
     const auto iterator1 = std::is_sorted_until(v.cbegin(), v.cend());
+    // Points to the last sorted element.
     EXPECT_EQ(*iterator1, 3);
     EXPECT_EQ(iterator1 - v.cbegin(), 4);
 
     std::sort(v.begin(), v.end());
     const auto iterator2 = std::is_sorted_until(v.cbegin(), v.cend());
-    EXPECT_EQ(iterator2, v.cend());
+    EXPECT_EQ(iterator2, v.cend()); // All elements are sorted.
     EXPECT_EQ(iterator2 - v.cbegin(), 7);
 }
 
