@@ -577,19 +577,134 @@ TEST(is_sorted_until, ExampleOne) {
 }
 
 // Note: partial_sort_copy() exists as well.
-TEST(partial_sort, ExampleOne) {}
+TEST(partial_sort, ExampleOne) {
+    std::vector<int> v{1,8,3,2,8,9,4};
+    std::partial_sort(v.begin(), v.begin() + 3, v.end());
 
-TEST(stable_sort, ExampleOne) {}
+    const std::vector<int> partial_sorted_v{1,2,3,8,8,9,4};
+    EXPECT_EQ(v, partial_sorted_v);
+}
 
-TEST(nth_element, ExampleOne) {}
+// A simple struct encapsulating the the name
+// and age of a person. This will be used in stable_sort.
+struct Person {
+    int age;
+    std::string name;
+
+    bool operator==(const Person& other) const {
+        return this->name == other.name && this->age == other.age;
+    }
+};
+
+// Less than comparison is completed only by age.
+bool operator<(const Person& lhs, const Person& rhs) {
+    return lhs.age < rhs.age;
+}
+
+TEST(stable_sort, ExampleOne) {
+    // This examples follows closely the one on
+    // cppreference.com
+    // Here, the persons are sorted by age, but if two
+    // persons have the same age, their relative order is maintained.
+
+    std::vector<Person> v = {
+            {108, "Zaphod"},
+            {32, "Arthur"},
+            {108, "Ford"},
+    };
+
+    std::stable_sort(v.begin(), v.end());
+
+    std::vector<Person> sorted_v = {
+            {32, "Arthur"},
+            {108, "Zaphod"},
+            {108, "Ford"},
+    };
+    EXPECT_EQ(v, sorted_v);
+}
+
+TEST(nth_element, ExampleOne) {
+    // Similar to partial_sort(), it'll get the first 5 elements
+    // according to the provided comparator. The only difference
+    // here is that they won't be sorted.
+    std::vector<int> v{1, 3, 9, 9, 3, 2, 5, 8, 7, 3, 2};
+    std::nth_element(v.begin(), v.begin() + 5, v.end(), std::greater<int>());
+
+    const std::vector<int> greatest_five { 8, 5, 9, 9, 7, 3, 3, 3, 2, 2, 1 };
+    EXPECT_EQ(v, greatest_five);
+}
 
 // Binary search operations (on sorted ranges).
+TEST(lower_bound, ExampleOne) {
+
+}
+
+TEST(upper_bound, ExampleOne) {
+
+}
+
+TEST(binary_search, ExampleOne) {
+
+}
+
+TEST(equal_range, ExampleOne) {
+
+}
 
 // Other operations (on sorted ranges).
+TEST(merge, ExampleOne) {
+
+}
+
+TEST(inplace_merge, ExampleOne) {
+
+}
 
 // Set operations (on sorted ranges).
+TEST(includes, ExampleOne) {
+
+}
+
+TEST(set_difference, ExampleOne) {
+
+}
+
+TEST(set_intersection, ExampleOne) {
+
+}
+
+TEST(set_symmetric_difference, ExampleOne) {
+
+}
+
+TEST(set_union, ExampleOne) {
+
+}
 
 // Heap operations.
+TEST(is_heap, ExampleOne) {
+
+}
+
+TEST(is_heap_until, ExampleOne) {
+
+}
+
+TEST(make_heap, ExampleOne) {
+
+}
+
+TEST(push_heap, ExampleOne) {
+
+}
+
+TEST(pop_heap, ExampleOne) {
+
+}
+
+TEST(sort_heap, ExampleOne) {
+    
+}
 
 // Minimum, maximum operations.
 
