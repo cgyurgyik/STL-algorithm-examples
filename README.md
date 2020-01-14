@@ -41,9 +41,9 @@ const bool contains_four = std::ranges::any_of(v, [](int i)->bool{ return i == 4
 ```
 
 ## Related STL Talks
-- [Meeting C++ 2019: Connor Hoekstra "Better Algorithm Intuition"](https://www.youtube.com/watch?v=TSZzvo4htTQ)
 - [CppCon 2019: Connor Hoekstra "Algorithm Intuition" Part 1](https://www.youtube.com/watch?v=pUEnO6SvAMo)
 - [CppCon 2019: Connor Hoekstra "Algorithm Intuition" Part 2](https://www.youtube.com/watch?v=sEvYmb3eKsw)
+- [Meeting C++ 2019: Connor Hoekstra "Better Algorithm Intuition"](https://www.youtube.com/watch?v=TSZzvo4htTQ)
 - [CppCon 2019: Mathieu Ropert "This Videogame Programmer Used the STL and You Will Never Guess What Happened Next"](https://www.youtube.com/watch?v=6hC9IxqdDDw)
 - [CppCon 2018: Jonathan Boccara "105 STL Algorithms in Less Than an Hour"](https://www.youtube.com/watch?v=2olsGf6JIkU&t=2459s)
 - [GoingNative C++ 2013: Sean Parent "C++ Seasoning"](https://www.youtube.com/watch?v=W2tWOdzgXHA)
@@ -51,3 +51,24 @@ const bool contains_four = std::ranges::any_of(v, [](int i)->bool{ return i == 4
 ## References
 - [cppreference.com](https://en.cppreference.com/w/cpp/algorithm)
 - [Google Test Suite](https://github.com/google/googletest)
+
+## MIT License
+Copyright (c) [2020] [Chris Gyurgyik]
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
