@@ -644,19 +644,39 @@ TEST(nth_element, ExampleOne) {
 
 // Binary search operations (on sorted ranges).
 TEST(lower_bound, ExampleOne) {
-
+    const std::vector<int> data{1,2,3,4,5,6,7,8,9,9,10};
+    const auto lower = std::lower_bound(data.cbegin(), data.cend(), 4);
+    EXPECT_EQ(*lower, 4);
+    // Lower bound includes the current element.
+    EXPECT_EQ(lower - data.cbegin(), 3);
 }
 
 TEST(upper_bound, ExampleOne) {
-
+    const std::vector<int> data{1,2,3,4,5,6,7,8,9,9,10};
+    const auto upper = std::upper_bound(data.cbegin(), data.cend(), 9);
+    EXPECT_EQ(*upper, 10);
+    // Upper bound goes one past the current element.
+    EXPECT_EQ(upper - data.cbegin(), 10);
 }
 
 TEST(binary_search, ExampleOne) {
+    const std::vector<int> data{1,2,3,4,5,6,7,8,9,9,10};
+    const bool found = std::binary_search(data.cbegin(), data.cend(), 3);
+    EXPECT_TRUE(found);
 
+    const bool not_found = std::binary_search(data.cbegin(), data.cend(), 11);
+    EXPECT_FALSE(not_found);
 }
 
 TEST(equal_range, ExampleOne) {
+    // This is useful when you want an upper and a lower bound.
+    const std::vector<int> data{1,2,3,3,4,4,5,5,5,6,7,8};
+    const auto [lower, upper] = std::equal_range(data.cbegin(), data.cend(), 5);
+    EXPECT_EQ(*lower, 5);
+    EXPECT_EQ(lower - data.cbegin(), 6);
 
+    EXPECT_EQ(*upper, 6);
+    EXPECT_EQ(upper - data.cbegin(), 9);
 }
 
 // Other operations (on sorted ranges).
