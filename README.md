@@ -14,7 +14,7 @@ for (int i = 0; i < v.size(); ++i) {
   }
 }
 ```
-This could be improved upon by using a range-based loop:
+This can be improved upon by using a range-based loop, [where we avoid the micro cost of ```std::vector::size```](https://twitter.com/trav_downs/status/1216155531057995782):
 ```
 // Determines whether 'v' contains 4.
 bool contains_four = false;
