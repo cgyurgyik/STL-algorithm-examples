@@ -7,6 +7,14 @@
 // The goal is to provide self-fulfilling examples that can be pulled individually
 // for others to use and look at.
 
+// To find a specific function example,
+// simply use the find feature and type:
+//        TEST(<function_name>
+//
+// For example, if I want to see stable_sort,
+// I would hit (command + f) on my keyboard and type:
+//       TEST(stable_sort
+
 // Non-modifying sequence operations.
 TEST(any_of, ExampleOne) {
     const std::vector<int> numbers{1,2,3,4,4,5};
@@ -703,7 +711,7 @@ TEST(pop_heap, ExampleOne) {
 }
 
 TEST(sort_heap, ExampleOne) {
-    
+
 }
 
 // Minimum, maximum operations.
