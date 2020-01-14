@@ -539,11 +539,41 @@ TEST(partition_point, ExampleOne) {
 }
 
 // Sorting operations.
-TEST(is_sorted, ExampleOne) {}
+TEST(is_sorted, ExampleOne) {
+    const std::vector<int> v1{1,2,3,4,5};
+    EXPECT_TRUE(std::is_sorted(v1.begin(), v1.end()));
 
-TEST(is_sorted_until, ExampleOne) {}
+    const std::vector<int> v2{5,2,3,4,1};
+    EXPECT_FALSE(std::is_sorted(v2.begin(), v2.end()));
+}
 
-TEST(sort, ExampleOne) {}
+TEST(sort, ExampleOne) {
+    std::vector<int> v{1,3,2,4,4,5};
+    std::sort(v.begin(), v.end());
+
+    const std::vector<int> sorted_v{1,2,3,4,4,5};
+    EXPECT_EQ(v, sorted_v);
+}
+
+TEST(sort, ExampleTwoWithPredicate) {
+    std::vector<int> v{1,3,2,4,4,5};
+    std::sort(v.begin(), v.end(), std::greater<int>());
+
+    const std::vector<int> sorted_v{5,4,4,3,2,1};
+    EXPECT_EQ(v, sorted_v);
+}
+
+TEST(is_sorted_until, ExampleOne) {
+    std::vector<int> v{1, 2, 3, 4, 3, 5, 6};
+    const auto iterator1 = std::is_sorted_until(v.cbegin(), v.cend());
+    EXPECT_EQ(*iterator1, 3);
+    EXPECT_EQ(iterator1 - v.cbegin(), 4);
+
+    std::sort(v.begin(), v.end());
+    const auto iterator2 = std::is_sorted_until(v.cbegin(), v.cend());
+    EXPECT_EQ(iterator2, v.cend());
+    EXPECT_EQ(iterator2 - v.cbegin(), 7);
+}
 
 // Note: partial_sort_copy() exists as well.
 TEST(partial_sort, ExampleOne) {}
