@@ -901,8 +901,49 @@ TEST(next_permutation, ExampleOne) {}
 TEST(prev_permutation, ExampleOne) {}
 
 // Numeric operations.
+TEST(iota, ExampleOne) {}
+
+TEST(accumulate, ExampleOne) {}
+
+TEST(inner_product, ExampleOne) {}
+
+TEST(adjacent_difference, ExampleOne) {}
+
+TEST(partial_sum, ExampleOne) {}
+
+TEST(reduce, ExampleOne) {}
+
+TEST(exclusive_scan, ExampleOne) {}
+
+TEST(inclusive_scan, ExampleOne) {}
+
+TEST(transform_reduce, ExampleOne) {}
+
+TEST(transform_exclusive_scan, ExampleOne) {}
+
+TEST(transform_inclusive_scan, ExampleOne) {}
 
 // Operations on uninitialized memory.
 
+// Note that uninitialized_copy_n() also exists.
+TEST(uninitialized_copy, ExampleOne) {}
+
+// Note that uninitialized_fill_n() also exists.
+TEST(uninitialized_fill, ExampleOne) {}
+
+// Note that uninitialized_move_n() also exists.
+TEST(uninitialized_move, ExampleOne) {}
+
+// Note that uninitialized_default_construct_n() also exists.
+TEST(uninitialized_default_construct, ExampleOne) {}
+
+TEST(destroy_at, ExampleOne) {}
+
+// Note that destroy_n() also exists.
+TEST(destroy, ExampleOne) {}
+
 // C library.
+TEST(qsort, ExampleOne) {}
+
+TEST(bsearch, ExampleOne) {}
 
