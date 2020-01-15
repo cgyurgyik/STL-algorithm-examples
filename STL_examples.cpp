@@ -859,31 +859,57 @@ TEST(sort_heap, ExampleOne) {
 
 // Minimum, maximum operations.
 TEST(max, ExampleOne) {
-
+    EXPECT_EQ(std::max(1,2), 2);
+    EXPECT_EQ(std::max('a', 'z'), 'z');
 }
 
 TEST(max_element, ExampleOne) {
-
+    const std::vector<int> v{1,1,2,3,4,5,6};
+    const auto iterator = std::max_element(v.cbegin(), v.cend());
+    EXPECT_EQ(*iterator, 6);
+    EXPECT_EQ(iterator, v.cend() - 1);
 }
 
 TEST(min, ExampleOne) {
-
+    EXPECT_EQ(std::min(1,2), 1);
+    EXPECT_EQ(std::min('a', 'z'), 'a');
 }
 
 TEST(min_element, ExampleOne) {
-
+    const std::vector<int> v{1,1,2,3,4,5,6};
+    const auto iterator = std::min_element(v.cbegin(), v.cend());
+    EXPECT_EQ(*iterator, 1);
+    EXPECT_EQ(iterator, v.cbegin());
 }
 
 TEST(minmax, ExampleOne) {
-
+    const auto bounds = std::minmax({3,8,4,4,2,1});
+    EXPECT_EQ(bounds.first, 1);
+    EXPECT_EQ(bounds.second, 8);
 }
 
 TEST(minmax_element, ExampleOne) {
-
+    const std::vector<int> v{1,1,2,3,4,5,6};
+    const auto [min, max] = std::minmax_element(v.cbegin(), v.cend());
+    EXPECT_EQ(*min, 1);
+    EXPECT_EQ(*max, 6);
 }
 
 TEST(clamp, ExampleOne) {
+    int i = 11;
+    const int max_bound = 10;
+    const int min_bound = 1;
 
+    int new_i = std::clamp(new_i, min_bound, max_bound);
+    EXPECT_EQ(new_i, 10);
+
+    i = -1;
+    new_i = std::clamp(i, min_bound, max_bound);
+    EXPECT_EQ(new_i, 1);
+
+    i = 5;
+    new_i = std::clamp(i, min_bound, max_bound);
+    EXPECT_EQ(new_i, 5);
 }
 
 // Comparison operations.
