@@ -822,24 +822,87 @@ TEST(make_heap, ExampleOne) {
 }
 
 TEST(push_heap, ExampleOne) {
+    // Constructs a max heap.
+    std::vector<int> v{1,2,3,4,5,6,5,4};
+    std::make_heap(v.begin(), v.end());
 
+    v.push_back(9);
+    std::push_heap(v.begin(), v.end());
+
+    const std::vector<int> expected_heap{9,6,5,5,2,3,1,4,4};
+    EXPECT_EQ(v, expected_heap);
 }
 
 TEST(pop_heap, ExampleOne) {
+    // Removes the largest element.
+    std::vector<int> v{1,2,3,4,5,6,5,4};
+    std::make_heap(v.begin(), v.end());
 
+    std::pop_heap(v.begin(), v.end());
+
+    const std::vector<int> expected_heap{5,4,5,4,2,3,1,6};
+    EXPECT_EQ(v, expected_heap);
 }
 
 TEST(sort_heap, ExampleOne) {
+    // Converts the max heap into a sorted range in ascending order.
+    std::vector<int> v{1,2,3,4,5,6,5,4};
+    std::make_heap(v.begin(), v.end());
 
+    const std::vector<int> expected_heap{6,5,5,4,2,3,1,4};
+    EXPECT_EQ(v, expected_heap);
+
+    std::sort_heap(v.begin(), v.end());
+    const std::vector<int> sorted_v{1,2,3,4,4,5,5,6};
+    EXPECT_EQ(v, sorted_v);
 }
 
 // Minimum, maximum operations.
+TEST(max, ExampleOne) {
+
+}
+
+TEST(max_element, ExampleOne) {
+
+}
+
+TEST(min, ExampleOne) {
+
+}
+
+TEST(min_element, ExampleOne) {
+
+}
+
+TEST(minmax, ExampleOne) {
+
+}
+
+TEST(minmax_element, ExampleOne) {
+
+}
+
+TEST(clamp, ExampleOne) {
+
+}
 
 // Comparison operations.
+TEST(equal, ExampleOne) {}
+
+TEST(lexicographical_compare, ExampleOne) {}
+
+TEST(lexicographical_compare_three_way, ExampleOne) {}
 
 // Permutation operations.
+TEST(is_permutation, ExampleOne) {}
+
+TEST(next_permutation, ExampleOne) {}
+
+TEST(prev_permutation, ExampleOne) {}
 
 // Numeric operations.
 
 // Operations on uninitialized memory.
+
+// C library.
 
