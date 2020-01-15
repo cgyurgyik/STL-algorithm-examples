@@ -822,11 +822,11 @@ TEST(make_heap, ExampleOne) {
 }
 
 TEST(push_heap, ExampleOne) {
-    // Constructs a max heap.
     std::vector<int> v{1,2,3,4,5,6,5,4};
     std::make_heap(v.begin(), v.end());
 
     v.push_back(9);
+    // Pushes 9 onto the heap while maintaining max heap conditions.
     std::push_heap(v.begin(), v.end());
 
     const std::vector<int> expected_heap{9,6,5,5,2,3,1,4,4};
