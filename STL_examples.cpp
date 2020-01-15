@@ -794,14 +794,30 @@ TEST(set_union, ExampleTwoWithDuplicates) {
 
 // Heap operations.
 TEST(is_heap, ExampleOne) {
-
+    // Checks if the elements in the range are a max heap.
+    const std::vector<int> v{9, 5, 4, 1, 1, 3};
+    const bool v_is_heap = std::is_heap(v.cbegin(), v.cend());
+    EXPECT_TRUE(v_is_heap);
 }
 
 TEST(is_heap_until, ExampleOne) {
+    // Finds largest subsequence in the range that make a max heap.
+    const std::vector<int> v1{9, 5, 4, 1, 1, 3};
+    const auto iterator = std::is_heap_until(v1.cbegin(), v1.cend());
+    EXPECT_EQ(iterator, v1.cend());
 
+    const std::vector<int> v2{9, 5, 4, 1, 1, 3, 2, 6};
+    const auto iterator2 = std::is_heap_until(v2.cbegin(), v2.cend());
+    EXPECT_EQ(iterator2, v2.cend() - 1);
 }
 
 TEST(make_heap, ExampleOne) {
+    // Constructs a max heap.
+    std::vector<int> v{1,2,3,4,5,6,5,4};
+    std::make_heap(v.begin(), v.end());
+
+    const std::vector<int> expected_heap{6,5,5,4,2,3,1,4};
+    EXPECT_EQ(v, expected_heap);
 
 }
 
