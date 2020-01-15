@@ -706,7 +706,7 @@ void merge_sort(Iter first, Iter last) {
 
 TEST(inplace_merge, ExampleOne) {
     std::vector<int> v{9, 3, -4, 4, 8, 9, 2, 2};
-    // See Implementation above.
+    // See implementation above.
     merge_sort(v.begin(), v.end());
 
     const std::vector<int> v_sorted{-4, 2, 2, 3, 4, 8, 9, 9};
@@ -715,23 +715,81 @@ TEST(inplace_merge, ExampleOne) {
 
 // Set operations (on sorted ranges).
 TEST(includes, ExampleOne) {
+    // std::includes returns true if the first sorted range
+    // is a non-contiguous subsequence of the second sorted range.
+    const std::vector<char> v{'a', 'b', 'c', 'd', 'e', 'f'};
 
+    const std::vector<char> sub_v1{'a', 'b', 'c'};
+    const bool v1_is_included = std::includes(v.cbegin(), v.cend(), sub_v1.cbegin(), sub_v1.cend());
+    EXPECT_TRUE(v1_is_included);
+
+    const std::vector<char> sub_v2{'a', 'c', 'f'};
+    const bool v2_is_included = std::includes(v.cbegin(), v.cend(), sub_v2.cbegin(), sub_v2.cend());
+    EXPECT_TRUE(v2_is_included);
+
+    const std::vector<char> sub_v3{'a', 'c', 'x'};
+    const bool v3_is_included = std::includes(v.cbegin(), v.cend(), sub_v3.cbegin(), sub_v3.cend());
+    EXPECT_FALSE(v3_is_included);
 }
 
 TEST(set_difference, ExampleOne) {
+    // Takes the difference between the two sorted ranges.
+    const std::vector<char> v1{'a', 'b', 'c', 'd', 'e', 'f'};
+    const std::vector<char> v2{'b', 'c', 'd'};
+    std::vector<char> difference;
+    std::set_difference(v1.cbegin(), v1.cend(), v2.cbegin(), v2.cend(), std::back_inserter(difference));
 
+    const std::vector expected_difference{'a', 'e', 'f'};
+    EXPECT_EQ(difference, expected_difference);
 }
 
 TEST(set_intersection, ExampleOne) {
+    // Takes the intersection between two sorted ranges.
+    const std::vector<int> v1{1,2,3,4,5,6};
+    const std::vector<int> v2{4,5,6,7,8,9};
+    std::vector<int> intersection;
 
+    std::set_intersection(v1.cbegin(), v1.cend(), v2.cbegin(), v2.cend(), std::back_inserter(intersection));
+
+    const std::vector<int> expected_intersection{4,5,6};
+    EXPECT_EQ(intersection, expected_intersection);
 }
 
 TEST(set_symmetric_difference, ExampleOne) {
+    // Takes the symmetric difference between two sorted ranges.
+    const std::vector<int> v1{1,2,3,4,5,6};
+    const std::vector<int> v2{4,5,6,7,8,9};
+    std::vector<int> symmetric_difference;
 
+    std::set_symmetric_difference(v1.cbegin(), v1.cend(), v2.cbegin(), v2.cend(),
+                                  std::back_inserter(symmetric_difference));
+
+    const std::vector<int> expected_symmetric_difference{1,2,3,7,8,9};
+    EXPECT_EQ(symmetric_difference, expected_symmetric_difference);
 }
 
 TEST(set_union, ExampleOne) {
+    // Takes the union between two sorted ranges.
+    const std::vector<int> v1{1,2,3,4,5,6};
+    const std::vector<int> v2{4,5,6,7,8,9};
+    std::vector<int> union_t;
 
+    std::set_union(v1.cbegin(), v1.cend(), v2.cbegin(), v2.cend(), std::back_inserter(union_t));
+
+    const std::vector<int> expected_union{1,2,3,4,5,6,7,8,9};
+    EXPECT_EQ(union_t, expected_union);
+}
+
+TEST(set_union, ExampleTwoWithDuplicates) {
+    // Takes the union between two sorted ranges.
+    const std::vector<int> v1{1,1,2,3,4,5,6};
+    const std::vector<int> v2{1,1,1,4,5,6,7,8,9};
+    std::vector<int> union_t;
+
+    std::set_union(v1.cbegin(), v1.cend(), v2.cbegin(), v2.cend(), std::back_inserter(union_t));
+
+    const std::vector<int> expected_union{1,1,1,2,3,4,5,6,7,8,9};
+    EXPECT_EQ(union_t, expected_union);
 }
 
 // Heap operations.
