@@ -681,11 +681,36 @@ TEST(equal_range, ExampleOne) {
 
 // Other operations (on sorted ranges).
 TEST(merge, ExampleOne) {
+    std::vector<int> v1{0, 1, 2, 3, 3, 4, 5};
+    std::vector<int> v2{0, 2, 3, 4, 4, 5};
+    std::vector<int> destination;
+    destination.reserve(v1.size() + v2.size());
+    std::merge(v1.begin(), v1.end(), v2.begin(), v2.end(), std::back_inserter(destination));
 
+    const std::vector<int> merged{0,0,1,2,2,3,3,3,4,4,4,5,5};
+    EXPECT_EQ(destination, merged);
+}
+
+// Taken from cppreference.com, we can use std::merge_sort and
+// std::inplace_merge to implement the sorting algorithm merge_sort.
+template<class Iter>
+void merge_sort(Iter first, Iter last) {
+    if (last - first > 1) {
+        const Iter middle = first + (last - first) / 2;
+        merge_sort(first, middle);
+        merge_sort(middle, last);
+        // Merges two consecutive sorted ranges into one range.
+        std::inplace_merge(first, middle, last);
+    }
 }
 
 TEST(inplace_merge, ExampleOne) {
+    std::vector<int> v{9, 3, -4, 4, 8, 9, 2, 2};
+    // See Implementation above.
+    merge_sort(v.begin(), v.end());
 
+    const std::vector<int> v_sorted{-4, 2, 2, 3, 4, 8, 9, 9};
+    EXPECT_EQ(v, v_sorted);
 }
 
 // Set operations (on sorted ranges).
