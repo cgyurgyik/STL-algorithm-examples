@@ -927,8 +927,8 @@ TEST(equal, ExampleOne) {
 TEST(lexicographical_compare, ExampleOne) {
     const std::vector<char> v1 {'a', 'p', 'e'};
     const std::vector<char> v2 {'a', 'p', 'p', 'l', 'e'};
-    const bool lex = std::lexicographical_compare(v1.cbegin(), v1.cend(), v2.cbegin(), v2.cend());
-    EXPECT_TRUE(lex);
+    const bool compare_words = std::lexicographical_compare(v1.cbegin(), v1.cend(), v2.cbegin(), v2.cend());
+    EXPECT_TRUE(compare_words);
 }
 
 TEST(lexicographical_compare_three_way, ExampleOne) {}
