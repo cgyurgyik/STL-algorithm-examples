@@ -913,7 +913,17 @@ TEST(clamp, ExampleOne) {
 }
 
 // Comparison operations.
-TEST(equal, ExampleOne) {}
+TEST(equal, ExampleOne) {
+    const std::vector<int> v1{1,2,3,4,5};
+    const std::vector<int> v2{1,2,3,4,5};
+    const bool is_equal1 = std::equal(v1.cbegin(), v1.cend(), v2.cbegin());
+
+    EXPECT_TRUE(is_equal1);
+
+    const std::vector<int> diff{-1,2,3,4,5};
+    const bool is_equal2 = std::equal(v1.cbegin(), v1.cend(), diff.cbegin());
+    EXPECT_FALSE(is_equal2);
+}
 
 TEST(lexicographical_compare, ExampleOne) {}
 
