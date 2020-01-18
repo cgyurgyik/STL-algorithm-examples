@@ -1104,7 +1104,33 @@ TEST(destroy_at, ExampleOne) {}
 TEST(destroy, ExampleOne) {}
 
 // C library.
-TEST(qsort, ExampleOne) {}
+TEST(qsort, ExampleOne) {
+    int a[] = {-10, 1, 14, 3, 2, 2, 5};
+    constexpr std::size_t size = sizeof(a) / sizeof(int);
 
-TEST(bsearch, ExampleOne) {}
+    const auto compare = [](const void* a, const void* b)->int {
+        return ( *(int*)a - *(int*) b);
+    };
+    std::qsort(a, size, sizeof(int), compare);
+
+    int expected_a[] = {-10, 1, 2, 2, 3, 5, 14};
+    EXPECT_EQ(*a, *expected_a);
+}
+
+TEST(bsearch, ExampleOne) {
+    int a[] = {-2,-1,1,2,3,4,5};
+    constexpr std::size_t size = sizeof(a) / sizeof(int);
+
+    const auto compare = [](const void* a, const void* b)->int {
+        const int* aa = (int *)a;
+        const int* bb = (int *)b;
+        if (*aa < *bb) return -1;
+        else if (*aa > *bb) return 1;
+        return 0;
+    };
+    int key = 4;
+    int *find = (int *)std::bsearch(&key, a, size, sizeof(int), compare);
+    EXPECT_EQ(*find, 4);
+    EXPECT_EQ(find - a, 5);
+}
 
