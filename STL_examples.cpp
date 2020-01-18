@@ -932,28 +932,117 @@ TEST(lexicographical_compare, ExampleOne) {
 }
 
 // Permutation operations.
-TEST(is_permutation, ExampleOne) {}
+TEST(is_permutation, ExampleOne) {
+    const std::vector<int> v1{1,2,3};
+    const std::vector<int> v2{2,1,3};
 
-TEST(next_permutation, ExampleOne) {}
+    bool is_permutation = std::is_permutation(v1.cbegin(), v1.cend(), v2.cbegin());
+    EXPECT_TRUE(is_permutation);
 
-TEST(prev_permutation, ExampleOne) {}
+    const std::vector<int> v3{1,2,2};
+    is_permutation = std::is_permutation(v1.cbegin(), v1.cend(), v3.cbegin());
+    EXPECT_FALSE(is_permutation);
+}
+
+TEST(next_permutation, ExampleOne) {
+    std::vector<int> v{1,2,3,4,5};
+    std::next_permutation(v.begin(), v.end());
+
+    const std::vector<int> permuted_v{1,2,3,5,4};
+    EXPECT_EQ(v, permuted_v);
+}
+
+TEST(prev_permutation, ExampleOne) {
+    std::vector<int> v{1,2,3,5,4};
+    std::prev_permutation(v.begin(), v.end());
+
+    const std::vector<int> permuted_v{1,2,3,4,5};
+    EXPECT_EQ(v, permuted_v);
+}
 
 // Numeric operations.
-TEST(iota, ExampleOne) {}
+TEST(iota, ExampleOne) {
+    std::vector<int> v(10);
+    std::iota(v.begin(), v.end(), 1);
 
-TEST(accumulate, ExampleOne) {}
+    const std::vector<int> iota_v{1,2,3,4,5,6,7,8,9,10};
+    EXPECT_EQ(v, iota_v);
+}
 
-TEST(inner_product, ExampleOne) {}
+TEST(accumulate, ExampleOne) {
+    const std::vector<int> v{1,2,3,4,5};
 
-TEST(adjacent_difference, ExampleOne) {}
+    const int sum = std::accumulate(v.cbegin(), v.cend(), 0);
+    EXPECT_EQ(sum, 15);
 
-TEST(partial_sum, ExampleOne) {}
+    const int product = std::accumulate(v.cbegin(), v.cend(), 1, std::multiplies<int>());
+    EXPECT_EQ(product, 120);
+}
 
-TEST(reduce, ExampleOne) {}
+TEST(inner_product, ExampleOne) {
+    const std::vector<int>v1{1,2,3,4,5};
+    const std::vector<int>v2{1,2,3,4,5};
 
-TEST(exclusive_scan, ExampleOne) {}
+    const int inner_product = std::inner_product(v1.cbegin(), v1.cend(), v2.cbegin(), 0);
+    EXPECT_EQ(inner_product, 55);
+}
 
-TEST(inclusive_scan, ExampleOne) {}
+TEST(adjacent_difference, ExampleOne) {
+    const std::vector<int> v{2, 4, 6, 8, 10, 12};
+    std::vector<int> differences;
+    std::adjacent_difference(v.cbegin(), v.cend(), std::back_inserter(differences));
+
+    const std::vector<int> twos(v.size(), 2);
+    EXPECT_EQ(differences, twos);
+}
+
+TEST(partial_sum, ExampleOne) {
+    const std::vector<int> v{1,2,3,4,5};
+    std::vector<int> sums;
+    std::partial_sum(v.begin(), v.end(), std::back_inserter(sums));
+
+    const std::vector<int> expected_sums{1,3,6,10,15};
+    EXPECT_EQ(sums, expected_sums);
+}
+
+TEST(partial_sum, ExampleTwoWithMultiply) {
+    const std::vector<int> v{2,2,2,2,2};
+    std::vector<int> powers;
+    std::partial_sum(v.begin(), v.end(), std::back_inserter(powers), std::multiplies<int>());
+
+    const std::vector<int> expected_powers{2,4,8,16,32};
+    EXPECT_EQ(powers, expected_powers);
+}
+
+TEST(exclusive_scan, ExampleOne) {
+    const std::vector<int> v{1,2,3,4,5};
+    std::vector<int> sums;
+    std::exclusive_scan(v.begin(), v.end(), std::back_inserter(sums), 0);
+
+    const std::vector<int> expected_sums{0,1,3,6,10};
+    EXPECT_EQ(sums, expected_sums);
+}
+
+TEST(inclusive_scan, ExampleOne) {
+    const std::vector<int> v{1,2,3,4,5};
+    std::vector<int> sums;
+    std::inclusive_scan(v.begin(), v.end(), std::back_inserter(sums));
+
+    const std::vector<int> expected_sums{1,3,6,10,15};
+    EXPECT_EQ(sums, expected_sums);
+}
+
+TEST(reduce, ExampleOne) {
+    // Similar to std::accumulate, but the elements may be grouped
+    // and rearranged in arbitrary order.
+    const std::vector<int> v{1,2,3,4,5};
+
+    const int sum = std::reduce(v.cbegin(), v.cend(), 0);
+    EXPECT_EQ(sum, 15);
+
+    const int product = std::reduce(v.cbegin(), v.cend(), 1, std::multiplies<int>());
+    EXPECT_EQ(product, 120);
+}
 
 TEST(transform_reduce, ExampleOne) {}
 
