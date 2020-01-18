@@ -1034,7 +1034,8 @@ TEST(inclusive_scan, ExampleOne) {
 
 TEST(reduce, ExampleOne) {
     // Similar to std::accumulate, but the elements may be grouped
-    // and rearranged in arbitrary order.
+    // and rearranged in arbitrary order. This allows for parallelization.
+    // See: https://blog.tartanllama.xyz/accumulate-vs-reduce/
     const std::vector<int> v{1,2,3,4,5};
 
     const int sum = std::reduce(v.cbegin(), v.cend(), 0);
@@ -1044,11 +1045,44 @@ TEST(reduce, ExampleOne) {
     EXPECT_EQ(product, 120);
 }
 
-TEST(transform_reduce, ExampleOne) {}
+TEST(transform_reduce, ExampleOne) {
+    std::vector<int> v{1,2,3,4,5};
+    const int result = std::transform_reduce(v.cbegin(), v.cend(), 0, std::plus<>(), [](int a){return a * a;});
+    // Multiples (transformation):
+    // {1,2,3,4,5} -> {1,4,9,16,25}
+    // Then adds (reduction):
+    // 1 + 4 + 9 + 16 + 25
+    // = 55
+    EXPECT_EQ(result, 55);
+}
 
-TEST(transform_exclusive_scan, ExampleOne) {}
+TEST(transform_exclusive_scan, ExampleOne) {
+    const std::vector<int> v{1,2,3,4,5};
+    std::vector<int> sums;
+    std::transform_exclusive_scan(v.cbegin(), v.cend(), std::back_inserter(sums), 0, std::plus<int>{},
+                                  [](int i){return i * 2;});
 
-TEST(transform_inclusive_scan, ExampleOne) {}
+    // Multiplies by 2 (transformation)
+    // {1,2,3,4,5} -> {2, 4, 6, 8, 10}
+    // Then adds (exclusive sum):
+    // -> {0, 2, 6, 12, 20}
+    const std::vector<int> expected_sums{0,2,6,12,20};
+    EXPECT_EQ(sums, expected_sums);
+}
+
+TEST(transform_inclusive_scan, ExampleOne) {
+    const std::vector<int> v{1,2,3,4,5};
+    std::vector<int> sums;
+    std::transform_inclusive_scan(v.cbegin(), v.cend(), std::back_inserter(sums), std::plus<int>{},
+                                  [](int i){return i * 2;});
+
+    // Multiplies by 2 (transformation)
+    // {1,2,3,4,5} -> {2, 4, 6, 8, 10}
+    // Then adds (inclusive sum):
+    // -> {2, 6, 12, 20, 30}
+    const std::vector<int> expected_sums{2,6,12,20,30};
+    EXPECT_EQ(sums, expected_sums);
+}
 
 // Operations on uninitialized memory.
 
