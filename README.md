@@ -48,6 +48,9 @@ const bool contains_four = std::ranges::any_of(v, [](int i)->bool{ return i == 4
 - [CppCon 2018: Jonathan Boccara "105 STL Algorithms in Less Than an Hour"](https://www.youtube.com/watch?v=2olsGf6JIkU&t=2459s)
 - [GoingNative C++ 2013: Sean Parent "C++ Seasoning"](https://www.youtube.com/watch?v=W2tWOdzgXHA)
 
+## TODO
+- Finish uninitialized memory algorithms.
+
 ## References
 - [cppreference.com](https://en.cppreference.com/w/cpp/algorithm)
 - [Google Test Suite](https://github.com/google/googletest)
