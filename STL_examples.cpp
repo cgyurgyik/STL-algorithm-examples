@@ -29,7 +29,7 @@ TEST(any_of, ExampleTwoEmptySet) {
     const std::vector<int> numbers;
     const bool equals_four = std::any_of(numbers.cbegin(), numbers.cend(), [](int i)->int{ return i == 4; });
     EXPECT_FALSE(equals_four);
-    const bool equals_zero = std::any_of(numbers.cbegin(), numbers.cend(), [](int i)->int{ return i == 10; });
+    const bool equals_zero = std::any_of(numbers.cbegin(), numbers.cend(), [](int i)->int{ return i == 0; });
     EXPECT_FALSE(equals_zero);
 }
 
